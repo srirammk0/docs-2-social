@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, FileText, Send, GitPullRequest, Zap, BarChart, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Terminal, GitMerge, FileCode2, Send, Zap, Shield, Blocks } from "lucide-react";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -13,132 +13,118 @@ export default function Home() {
     if(email) setSubmitted(true);
   };
 
-  const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.5 }
-  };
+  const codeString = `> Webhook received from GitHub
+> Analyzing commit: "feat: add stripe checkout"
+> Reading docs/billing.md
+...
+[Success] Generated 5-part Twitter Thread
+[Success] Generated LinkedIn post
+[Pending] Awaiting user approval...`;
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-0 bg-gradient-to-b from-black to-blue-950 text-white selection:bg-blue-500/30 overflow-x-hidden">
+    <main className="min-h-screen bg-[#0a0f1c] text-slate-300 font-sans selection:bg-blue-500/30 overflow-x-hidden">
       
       {/* Navbar */}
-      <nav className="w-full flex justify-between items-center p-6 max-w-6xl mx-auto border-b border-white/5">
-        <div className="flex items-center gap-2 font-bold text-xl tracking-tight">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-            <FileText className="w-5 h-5 text-white" />
-          </div>
-          Docs2Social
+      <nav className="w-full flex justify-between items-center p-6 max-w-7xl mx-auto">
+        <div className="flex items-center gap-3 font-mono font-bold text-xl text-white">
+          <Terminal className="w-6 h-6 text-blue-400" />
+          docs2social
         </div>
-        <button className="px-5 py-2 rounded-full bg-white/10 text-sm font-medium hover:bg-white/20 transition-colors">
-          Login
+        <button className="px-6 py-2 rounded border border-slate-700 hover:bg-slate-800 transition-colors font-mono text-sm">
+          login
         </button>
       </nav>
 
-      {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center pt-32 pb-24 px-6 text-center max-w-4xl mx-auto">
-        <motion.div {...fadeInUp} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-sm mb-8 text-blue-300">
-          <Sparkles className="w-4 h-4" />
-          <span>The Repurposing Engine for Founders</span>
-        </motion.div>
-        
-        <motion.h1 {...fadeInUp} className="text-5xl md:text-7xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-400 leading-tight">
-          Ship the feature.<br/>We'll do the marketing.
-        </motion.h1>
-        
-        <motion.p {...fadeInUp} className="text-xl text-blue-200/80 mb-10 max-w-2xl leading-relaxed">
-          Automatically turn your GitHub commits, Notion docs, and changelogs into a week&apos;s worth of engaging Twitter threads and LinkedIn posts.
-        </motion.p>
+      {/* Split Hero Section */}
+      <section className="max-w-7xl mx-auto px-6 pt-20 pb-32 grid lg:grid-cols-2 gap-16 items-center">
+        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-blue-900/30 border border-blue-800 text-xs mb-8 text-blue-300 font-mono">
+            <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+            V1.0 Early Access
+          </div>
+          
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-white leading-tight">
+            Ship code.<br/>
+            <span className="text-blue-400">Not threads.</span>
+          </h1>
+          
+          <p className="text-lg text-slate-400 mb-10 leading-relaxed max-w-lg">
+            Connect your repository. Every time you push a release or update documentation, our agent writes highly engaging, technical social media posts for you.
+          </p>
 
-        <motion.div {...fadeInUp} className="w-full max-w-md">
           {!submitted ? (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row w-full gap-3">
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
               <input 
                 type="email" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email" 
-                className="w-full bg-white/5 border border-white/10 rounded-full px-6 py-4 text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                placeholder="git config user.email" 
+                className="w-full sm:w-80 bg-[#111827] border border-slate-700 rounded-lg px-5 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:border-blue-500 font-mono text-sm transition-all"
                 required
               />
-              <button type="submit" className="shrink-0 inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-500 transition-colors shadow-[0_0_20px_rgba(37,99,235,0.3)]">
-                Join Waitlist <ArrowRight className="w-5 h-5" />
+              <button type="submit" className="shrink-0 inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-500 transition-colors">
+                Init <ArrowRight className="w-4 h-4" />
               </button>
             </form>
           ) : (
-            <div className="flex items-center gap-3 px-6 py-4 bg-green-500/10 border border-green-500/20 rounded-full text-green-400 font-medium justify-center">
-              <Send className="w-5 h-5" />
-              <span>You&apos;re on the list! Keep an eye on your inbox.</span>
+            <div className="flex items-center gap-3 px-6 py-4 bg-emerald-900/20 border border-emerald-800/50 rounded-lg text-emerald-400 font-mono text-sm">
+              <Send className="w-4 h-4" />
+              [200 OK] Waitlist joined. Check your inbox.
             </div>
           )}
         </motion.div>
-      </section>
 
-      {/* How it Works */}
-      <section className="w-full py-24 bg-black/40 border-y border-white/5">
-        <div className="max-w-6xl mx-auto px-6">
-          <motion.div {...fadeInUp} className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">How it Works</h2>
-            <p className="text-blue-200/60 max-w-xl mx-auto">Three simple steps to automate your developer marketing workflow.</p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: GitPullRequest, title: "1. Connect Workflows", desc: "Link your GitHub repos, Notion workspaces, or Readme files." },
-              { icon: Zap, title: "2. Ship Code & Docs", desc: "Just do what you do best. Write code, document it, and push the release." },
-              { icon: Send, title: "3. AI Auto-Publishes", desc: "Gemini 3 Pro reads your updates and drafts native social media threads instantly." }
-            ].map((step, i) => (
-              <motion.div key={i} {...fadeInUp} transition={{ delay: i * 0.1 }} className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-blue-500/30 transition-colors">
-                <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center mb-6">
-                  <step.icon className="w-6 h-6 text-blue-400" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
-                <p className="text-blue-200/60 leading-relaxed">{step.desc}</p>
-              </motion.div>
-            ))}
+        {/* Terminal Mockup */}
+        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="w-full">
+          <div className="rounded-xl bg-[#0d1117] border border-slate-800 overflow-hidden shadow-2xl">
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-800 bg-[#161b22]">
+              <div className="w-3 h-3 rounded-full bg-red-500/80" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+              <div className="w-3 h-3 rounded-full bg-green-500/80" />
+              <span className="ml-2 font-mono text-xs text-slate-500">docs2social-agent ~ bash</span>
+            </div>
+            <div className="p-6 font-mono text-sm leading-relaxed text-emerald-400 whitespace-pre-wrap">
+              {codeString}
+              <motion.span animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }} className="inline-block w-2 h-4 bg-emerald-400 ml-1 align-middle" />
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="w-full py-24 max-w-6xl mx-auto px-6">
-        <motion.div {...fadeInUp} className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Built for Indie Hackers</h2>
-          <p className="text-blue-200/60 max-w-xl mx-auto">Everything you need to grow your audience without burning out.</p>
         </motion.div>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {[
-            { title: "No Cringe Hashtags", desc: "Our AI is trained specifically on high-performing, authentic developer Twitter threads." },
-            { title: "Approval Queue", desc: "Review every drafted post before it goes live, or set it to fully autonomous." },
-            { title: "Multi-Platform Formatting", desc: "Threads for Twitter, long-form for LinkedIn, visual summaries for Instagram." },
-            { title: "Engagement Analytics", desc: "Track which features your audience cares about the most." }
-          ].map((feature, i) => (
-            <motion.div key={i} {...fadeInUp} className="flex gap-4 p-6 rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/5">
-              <CheckCircle2 className="w-6 h-6 text-blue-500 shrink-0" />
-              <div>
-                <h4 className="text-lg font-medium mb-1">{feature.title}</h4>
-                <p className="text-blue-200/50 text-sm leading-relaxed">{feature.desc}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
       </section>
 
-      {/* Footer CTA */}
-      <section className="w-full py-24 border-t border-white/5 bg-blue-950/20">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl font-bold mb-6">Ready to stop doing your own marketing?</h2>
-          <button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-zinc-200 transition-colors">
-            Join the Waitlist
-          </button>
+      {/* Bento Grid Features */}
+      <section className="max-w-7xl mx-auto px-6 py-24 border-t border-slate-800">
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-white mb-4">The Developer's Marketing Stack</h2>
+          <p className="text-slate-400 max-w-2xl text-lg">You hate marketing. We hate bad APIs. So we built the perfect bridge between your code and your audience.</p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="md:col-span-2 p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 group hover:border-blue-500/50 transition-all">
+            <GitMerge className="w-8 h-8 text-blue-400 mb-6" />
+            <h3 className="text-xl font-bold text-white mb-2">GitHub Native</h3>
+            <p className="text-slate-400 leading-relaxed">Simply install our GitHub app. We listen for tags, releases, and PRs merged to main. No manual data entry required.</p>
+          </div>
+          <div className="p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 group hover:border-blue-500/50 transition-all">
+            <FileCode2 className="w-8 h-8 text-blue-400 mb-6" />
+            <h3 className="text-xl font-bold text-white mb-2">Notion Sync</h3>
+            <p className="text-slate-400 leading-relaxed">We sync with your public knowledge base to pull context.</p>
+          </div>
+          <div className="p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 group hover:border-blue-500/50 transition-all">
+            <Zap className="w-8 h-8 text-blue-400 mb-6" />
+            <h3 className="text-xl font-bold text-white mb-2">Zero Cringe</h3>
+            <p className="text-slate-400 leading-relaxed">No 🚀 emojis or "thread boys" formatting. Just solid engineering updates.</p>
+          </div>
+          <div className="md:col-span-2 p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 group hover:border-blue-500/50 transition-all">
+            <Blocks className="w-8 h-8 text-blue-400 mb-6" />
+            <h3 className="text-xl font-bold text-white mb-2">Multi-Platform Ready</h3>
+            <p className="text-slate-400 leading-relaxed">We compile your technical updates into short-form threads for Twitter, and long-form technical deep dives for LinkedIn simultaneously.</p>
+          </div>
         </div>
       </section>
       
       {/* Footer Mini */}
-      <footer className="w-full py-8 text-center text-sm text-blue-200/40 border-t border-white/5">
-        <p>© 2026 Docs2Social. Built with OpenClaw.</p>
+      <footer className="w-full py-12 text-center text-sm font-mono text-slate-600 border-t border-slate-800">
+        <p>npm install @docs2social/core --save</p>
       </footer>
     </main>
   );
